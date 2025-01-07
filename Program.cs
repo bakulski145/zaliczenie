@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ï»¿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,19 +12,27 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Dodajemy sesjê
+// Dodajemy sesjÃª
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);  // Czas wygasania sesji
-    options.Cookie.HttpOnly = true;                   // Zabezpieczenie przed dostêpem do cookie z JavaScriptu
+    options.Cookie.HttpOnly = true;                   // Zabezpieczenie przed dostÃªpem do cookie z JavaScriptu
 });
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
-// U¿ycie sesji przed routingiem
 app.UseSession();
+
 
 // Inne middleware
 app.UseRouting();

@@ -9,15 +9,16 @@ namespace zaliczenie.Controllers
         public IActionResult Index()
         {
             // Sprawdzamy, czy u¿ytkownik jest zalogowany
-            var username = HttpContext.Session.GetString("Username");
+            var email = HttpContext.Session.GetString("UserEmail");
 
             // Jeœli u¿ytkownik jest zalogowany, przekazujemy nazwê u¿ytkownika do widoku
-            if (!string.IsNullOrEmpty(username))
+            if (!string.IsNullOrEmpty(email))
             {
-                ViewBag.Username = username; // Przechowujemy dane w ViewBag
+                ViewBag.Username = email; // Przechowujemy email w ViewBag
             }
 
             return View();
         }
+
     }
 }

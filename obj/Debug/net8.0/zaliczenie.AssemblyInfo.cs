@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("zaliczenie")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f9c61f99292b13d0b886c06088180bfe130868be")]
 [assembly: System.Reflection.AssemblyProductAttribute("zaliczenie")]
 [assembly: System.Reflection.AssemblyTitleAttribute("zaliczenie")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

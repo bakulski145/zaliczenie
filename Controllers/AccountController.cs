@@ -2,6 +2,8 @@
 using zaliczenie.Data;
 using zaliczenie.Models;
 using Microsoft.AspNetCore.Http;
+using zaliczenie.ViewModels;
+
 
 namespace zaliczenie.Controllers
 {
@@ -13,6 +15,8 @@ namespace zaliczenie.Controllers
         {
             _context = context;
         }
+
+
 
         // Formularz rejestracji (GET)
         [HttpGet]
@@ -59,37 +63,72 @@ namespace zaliczenie.Controllers
 
         // Logowanie użytkownika (POST)
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(LoginViewModel model)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Username == username);
-
-            if (user == null)
+            if (ModelState.IsValid)
             {
-                ModelState.AddModelError("Username", "Username not found.");
-                return View(); // Zwróci widok z błędami
+                var user = _context.Users
+                    .FirstOrDefault(u => u.Email == model.Email && u.Password == model.Password);
+
+                if (user != null)
+                {
+                    // Zapisz dane do sesji
+                    HttpContext.Session.SetString("UserEmail", user.Email);
+                    HttpContext.Session.SetString("UserRole", user.Role);  // Dodajemy również rolę
+
+                    // Przekierowanie po zalogowaniu
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Nieprawidłowy email lub hasło.");
+                }
             }
 
-            if (user.Password != password)
-            {
-                ModelState.AddModelError("Password", "Incorrect password.");
-                return View(); // Zwróci widok z błędami
-            }
-
-            // Zapisanie sesji
-            HttpContext.Session.SetString("Username", user.Username);
-
-            // Komunikat po udanym logowaniu
-            TempData["SuccessMessage"] = "Logged in successfully!";
-            return RedirectToAction("Index", "Home");
+            return View(model);
         }
+
+
+
+        public IActionResult UserProfile()
+        {
+            // Sprawdź, czy użytkownik jest zalogowany
+            if (HttpContext.Session.GetString("UserRole") == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Pobierz dane użytkownika z sesji (lub bazy danych)
+            var email = HttpContext.Session.GetString("UserEmail");
+            var role = HttpContext.Session.GetString("UserRole");
+
+            // Utwórz model dla widoku
+            var model = new UserProfileViewModel
+            {
+                Email = email,
+                Role = role
+            };
+
+            return View(model);
+        }
+
+
+
 
 
         // Wylogowanie użytkownika
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("Username");
+            // Usunięcie danych użytkownika z sesji
+            HttpContext.Session.Remove("UserEmail");
+            HttpContext.Session.Remove("UserRole");
+
+            // Ustawienie komunikatu o wylogowaniu
             TempData["SuccessMessage"] = "Logged out successfully!";
+
+            // Przekierowanie na stronę główną
             return RedirectToAction("Index", "Home");
         }
+
     }
 }

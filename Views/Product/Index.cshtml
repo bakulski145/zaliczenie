@@ -1,0 +1,28 @@
+﻿@model IEnumerable<zaliczenie.Models.Product>
+
+<h1>Produkty</h1>
+
+@if (ViewBag.UserRole == "Admin")
+{
+    <a asp-action="Create" class="btn btn-primary">Dodaj produkt</a>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Cena</th>
+            <th>Opis</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>

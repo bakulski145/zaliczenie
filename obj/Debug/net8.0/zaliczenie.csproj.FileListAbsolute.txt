@@ -166,3 +166,4 @@ C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\refint\zalic
 C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\zaliczenie.pdb
 C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\zaliczenie.genruntimeconfig.cache
 C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\ref\zaliczenie.dll
+C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\zaliczenie.sourcelink.json

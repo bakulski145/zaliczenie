@@ -1,0 +1,10 @@
+﻿@model zaliczenie.ViewModels.UserProfileViewModel
+
+<h2>Informacje o zalogowanym użytkowniku</h2>
+
+<div>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Rola:</strong> @Model.Role</p>
+</div>
+
+<a asp-action="Logout" class="btn btn-danger">Wyloguj</a>

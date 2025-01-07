@@ -11,12 +11,18 @@
     <form method="post" action="/Account/Logout">
         <button type="submit">Log out</button>
     </form>
+
+    <!-- Przycisk do wyświetlenia produktów, widoczny tylko dla zalogowanego użytkownika -->
+    <a href="@Url.Action("Index", "Product")">Zobacz produkty</a>
 }
 else
 {
-<p>You are not logged in.</p>
-<a href="/Account/Login">Login</a>
-<a href ="/Account/Register"> Register </a>
+    <p>You are not logged in.</p>
+    <br />
+    <a href="/Account/Login">Login</a>
+    <br />
+    <a href="/Account/Register">Register</a>
+    <br />
 }
 
 <!-- Komunikaty zwrotne (np. po logowaniu) -->

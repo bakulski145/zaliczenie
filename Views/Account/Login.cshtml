@@ -1,39 +1,20 @@
-﻿@{
-    ViewData["Title"] = "Login";
-}
+﻿@model zaliczenie.ViewModels.LoginViewModel
 
-<h2>Login</h2>
+<h2>Logowanie</h2>
 
-<form method="post">
-    <div>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="Username" required />
-
-        <!-- Wyświetlanie błędu walidacji dla pola Username -->
-        @if (ViewData.ModelState.ContainsKey("Username") && ViewData.ModelState["Username"]?.Errors.Any() == true)
-        {
-            <span style="color: red;">@ViewData.ModelState["Username"]?.Errors[0]?.ErrorMessage</span>
-        }
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
-    <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="Password" required />
-
-        <!-- Wyświetlanie błędu walidacji dla pola Password -->
-        @if (ViewData.ModelState.ContainsKey("Password") && ViewData.ModelState["Password"]?.Errors.Any() == true)
-        {
-            <span style="color: red;">@ViewData.ModelState["Password"]?.Errors[0]?.ErrorMessage</span>
-        }
+    <div class="form-group">
+        <label for="Password">Hasło</label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
-    <button type="submit">Login</button>
+    <button type="submit" class="btn btn-primary">Zaloguj</button>
+
 </form>
-
-<!-- Wyświetlanie komunikatu o sukcesie logowania -->
-@if (TempData["SuccessMessage"] != null)
-{
-    <div style="color: green;">
-        @TempData["SuccessMessage"]
-    </div>
-}
