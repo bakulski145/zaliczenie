@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h2>Welcome to the Home Page</h2>
+
+<!-- Wyświetlanie informacji o użytkowniku, jeśli jest zalogowany -->
+@if (ViewBag.Username != null)
+{
+    <p>You are logged in as: <strong>@ViewBag.Username</strong></p>
+    <form method="post" action="/Account/Logout">
+        <button type="submit">Log out</button>
+    </form>
+}
+else
+{
+<p>You are not logged in.</p>
+<a href="/Account/Login">Login</a>
+<a href ="/Account/Register"> Register </a>
+}
+
+<!-- Komunikaty zwrotne (np. po logowaniu) -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div style="color: green;">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<!-- Przykład błędów przy logowaniu -->
+@if (!ViewData.ModelState.IsValid)
+{
+    <div style="color: red;">
+        <p>@ViewData["ErrorMessage"]</p>
+    </div>
+}

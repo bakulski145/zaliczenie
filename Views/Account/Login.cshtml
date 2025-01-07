@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form method="post">
+    <div>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="Username" required />
+
+        <!-- Wyświetlanie błędu walidacji dla pola Username -->
+        @if (ViewData.ModelState.ContainsKey("Username") && ViewData.ModelState["Username"]?.Errors.Any() == true)
+        {
+            <span style="color: red;">@ViewData.ModelState["Username"]?.Errors[0]?.ErrorMessage</span>
+        }
+    </div>
+
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="Password" required />
+
+        <!-- Wyświetlanie błędu walidacji dla pola Password -->
+        @if (ViewData.ModelState.ContainsKey("Password") && ViewData.ModelState["Password"]?.Errors.Any() == true)
+        {
+            <span style="color: red;">@ViewData.ModelState["Password"]?.Errors[0]?.ErrorMessage</span>
+        }
+    </div>
+
+    <button type="submit">Login</button>
+</form>
+
+<!-- Wyświetlanie komunikatu o sukcesie logowania -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div style="color: green;">
+        @TempData["SuccessMessage"]
+    </div>
+}
