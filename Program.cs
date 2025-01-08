@@ -20,7 +20,6 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {

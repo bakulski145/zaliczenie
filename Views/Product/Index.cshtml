@@ -1,18 +1,14 @@
 ﻿@model IEnumerable<zaliczenie.Models.Product>
 
-<h1>Produkty</h1>
+<h2>Lista produktów</h2>
 
-@if (ViewBag.UserRole == "Admin")
-{
-    <a asp-action="Create" class="btn btn-primary">Dodaj produkt</a>
-}
-
-<table class="table">
+<table>
     <thead>
         <tr>
             <th>Nazwa</th>
-            <th>Cena</th>
             <th>Opis</th>
+            <th>Cena</th>
+            <th>Akcje</th>
         </tr>
     </thead>
     <tbody>
@@ -20,9 +16,17 @@
         {
             <tr>
                 <td>@product.Name</td>
-                <td>@product.Price</td>
                 <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td>
+                    <form method="post" asp-controller="Product" asp-action="AddToCart">
+                        <input type="hidden" name="productId" value="@product.Id" />
+                        <button type="submit">Dodaj do koszyka</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<a asp-controller="Product" asp-action="Cart">Zobacz koszyk</a>

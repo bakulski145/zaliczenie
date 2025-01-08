@@ -167,3 +167,4 @@ C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\zaliczenie.p
 C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\zaliczenie.genruntimeconfig.cache
 C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\ref\zaliczenie.dll
 C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\obj\Debug\net8.0\zaliczenie.sourcelink.json
+C:\Users\Szymon\source\repos\zaliczenie\zaliczenie\bin\Debug\net8.0\Newtonsoft.Json.dll

@@ -118,17 +118,16 @@ namespace zaliczenie.Controllers
 
         // Wylogowanie użytkownika
         public IActionResult Logout()
-        {
-            // Usunięcie danych użytkownika z sesji
-            HttpContext.Session.Remove("UserEmail");
-            HttpContext.Session.Remove("UserRole");
+{
+    // Usunięcie danych użytkownika z sesji
+    HttpContext.Session.Remove("UserEmail");
+    HttpContext.Session.Remove("UserRole");
 
-            // Ustawienie komunikatu o wylogowaniu
-            TempData["SuccessMessage"] = "Logged out successfully!";
-
-            // Przekierowanie na stronę główną
-            return RedirectToAction("Index", "Home");
-        }
-
+    // Ustawienie komunikatu o wylogowaniu
+    TempData["SuccessMessage"] = "Logged out successfully!";
+    
+    // Przekierowanie na stronę główną
+    return RedirectToAction("Index", "Home");
+}
     }
 }
