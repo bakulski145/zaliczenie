@@ -1,19 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using zaliczenie.Data;
 using zaliczenie.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace zaliczenie.Controllers
+
+public class OrderController : Controller
 {
-    public class OrderController : Controller
-    {
-        public IActionResult CreateOrder()
-        {
-            return View();
-        }
+    // Deklaracja DbContext
+    private readonly ApplicationDbContext _dbContext;
 
-        [HttpPost]
-        public IActionResult CreateOrder(Order order)
+    // Konstruktor kontrolera
+    public OrderController(ApplicationDbContext dbContext)
+    {
+        _dbContext = dbContext; // Inicjalizacja DbContext
+    }
+
+    // Przykładowa akcja tworzenia zamówienia
+    public IActionResult CreateOrder(Order order)
+    {
+        try
         {
-            return RedirectToAction("Index", "Home");
+            _dbContext.Orders.Add(order); // Dodaj zamówienie do DbContext
+            _dbContext.SaveChanges(); // Zapisz zmiany do bazy danych
+            return RedirectToAction("Index"); // Przekierowanie po zapisaniu
+        }
+        catch (DbUpdateException ex)
+        {
+            // Obsługa błędów
+            Console.WriteLine("Error: " + ex.InnerException?.Message);
+            return View(order); // Powróć do widoku z błędem
         }
     }
 }

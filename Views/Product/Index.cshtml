@@ -1,32 +1,33 @@
-﻿@model IEnumerable<zaliczenie.Models.Product>
+﻿@model List<Product> 
 
-<h2>Lista produktów</h2>
+<h1>Lista produktów</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Nazwa</th>
-            <th>Opis</th>
-            <th>Cena</th>
-            <th>Akcje</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model)
-        {
+<form method="post" asp-controller="Order" asp-action="CreateOrder">
+    <table>
+        <thead>
             <tr>
-                <td>@product.Name</td>
-                <td>@product.Description</td>
-                <td>@product.Price</td>
-                <td>
-                    <form method="post" asp-controller="Product" asp-action="AddToCart">
-                        <input type="hidden" name="productId" value="@product.Id" />
-                        <button type="submit">Dodaj do koszyka</button>
-                    </form>
-                </td>
+                <th>Nazwa produktu</th>
+                <th>Cena</th>
+                <th>Ilość</th>
+                <th>Akcja</th>
             </tr>
-        }
-    </tbody>
-</table>
-
-<a asp-controller="Product" asp-action="Cart">Zobacz koszyk</a>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price.ToString("C")</td>
+                    <td>
+                        <!-- Pole wyboru ilości -->
+                        <input type="number" name="Quantities[@product.Id]" value="1" min="1" />
+                    </td>
+                    <td>
+                        <!-- Przycisk zamów -->
+                        <button type="submit" name="ProductId" value="@product.Id">Zamów</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

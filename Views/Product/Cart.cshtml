@@ -31,4 +31,9 @@ else
     </table>
 
     <p><strong>Suma: </strong>@Model.Sum(i => i.Price * i.Quantity)</p>
+
+    <form asp-controller="Product" asp-action="PlaceOrder" method="post">
+        <button type="submit" class="btn btn-primary">Zamów</button>
+    </form>
+
 }

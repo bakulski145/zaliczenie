@@ -4,6 +4,8 @@ using zaliczenie.Data;
 using zaliczenie.Models;
 using System.Linq;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace zaliczenie.Controllers
 {
@@ -13,8 +15,9 @@ namespace zaliczenie.Controllers
 
         public ProductController(ApplicationDbContext context)
         {
-            _context = context;
+            _context = context; // Upewnij się, że kontekst jest poprawnie wstrzykiwany
         }
+
 
         public IActionResult Index()
         {
@@ -37,26 +40,9 @@ namespace zaliczenie.Controllers
             return View();
         }
 
+
+        // Akcja, która dodaje produkt do koszyka
         [HttpPost]
-        public IActionResult Create(Product product)
-        {
-            var userRole = HttpContext.Session.GetString("UserRole");
-            if (userRole != "Admin")
-            {
-                return Unauthorized();
-            }
-
-            if (ModelState.IsValid)
-            {
-                _context.Products.Add(product);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(product);
-        }
-
-            // Akcja, która dodaje produkt do koszyka
-            [HttpPost]
             public IActionResult AddToCart(int productId)
             {
                 var product = _context.Products.FirstOrDefault(p => p.Id == productId);
