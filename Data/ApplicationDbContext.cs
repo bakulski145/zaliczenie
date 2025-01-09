@@ -3,15 +3,14 @@ using zaliczenie.Models;
 
 namespace zaliczenie.Data
 {
-        public class ApplicationDbContext : DbContext
-        {
-            public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-            {
-            }
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
+
+            public DbSet<Product> Products { get; set; }
             public DbSet<User> Users { get; set; }
-            public DbSet<Order> Orders { get; set; } // Tabela Orders
-            public DbSet<OrderItem> OrderItems { get; set; } // Tabela OrderItems
-            public DbSet<Product> Products { get; set; } // Tabela Products
-        }
+            public DbSet<Order> Orders { get; set; }
+
     }
+}

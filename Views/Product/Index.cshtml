@@ -1,33 +1,40 @@
-﻿@model List<Product> 
+﻿@model IEnumerable<zaliczenie.Models.Product>
 
-<h1>Lista produktów</h1>
+@{
+    var userRole = ViewBag.UserRole; // Pobieranie roli z ViewBag
+}
 
-<form method="post" asp-controller="Order" asp-action="CreateOrder">
-    <table>
-        <thead>
+<h2>Lista produktów</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Cena</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
             <tr>
-                <th>Nazwa produktu</th>
-                <th>Cena</th>
-                <th>Ilość</th>
-                <th>Akcja</th>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td>
+                    <form asp-action="CreateOrder" asp-controller="Order" method="post">
+                        <input type="hidden" name="productId" value="@product.Id" />
+                        <input type="number" name="quantity" min="1" value="1" />
+                        <button type="submit" class="btn btn-success">Zamów</button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var product in Model)
-            {
-                <tr>
-                    <td>@product.Name</td>
-                    <td>@product.Price.ToString("C")</td>
-                    <td>
-                        <!-- Pole wyboru ilości -->
-                        <input type="number" name="Quantities[@product.Id]" value="1" min="1" />
-                    </td>
-                    <td>
-                        <!-- Przycisk zamów -->
-                        <button type="submit" name="ProductId" value="@product.Id">Zamów</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</form>
+        }
+    </tbody>
+</table>
+@if (userRole == "Admin")
+{
+    <a href="@Url.Action("Create", "Product")" class="btn btn-primary">Dodaj produkt</a>
+    <a href="@Url.Action("Orders", "Product")" class="btn btn-primary">Sprawdź zamówienia</a>
+}

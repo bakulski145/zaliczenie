@@ -1,0 +1,29 @@
+﻿@model IEnumerable<zaliczenie.Models.Order>
+
+@{
+    var userRole = ViewBag.UserRole; // Pobieranie roli z ViewBag
+}
+
+<h2>Lista zamówień</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Id Produktu</th>
+            <th>Ilość</th>
+            <th>Email kupującego</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.ProductId</td>
+                <td>@order.Quantity</td>
+                <td>@order.UserEmail</td>
+            </tr>
+        }
+    </tbody>
+</table>

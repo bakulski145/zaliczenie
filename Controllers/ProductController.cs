@@ -4,8 +4,6 @@ using zaliczenie.Data;
 using zaliczenie.Models;
 using System.Linq;
 using Newtonsoft.Json;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace zaliczenie.Controllers
 {
@@ -15,89 +13,55 @@ namespace zaliczenie.Controllers
 
         public ProductController(ApplicationDbContext context)
         {
-            _context = context; // Upewnij się, że kontekst jest poprawnie wstrzykiwany
+            _context = context;
         }
-
 
         public IActionResult Index()
         {
             var userRole = HttpContext.Session.GetString("UserRole");
-            ViewBag.UserRole = userRole; // Przekazanie roli do widoku
+            ViewBag.UserRole = userRole;
+
+            var userEmail = HttpContext.Session.GetString("UserEmail");
+            ViewBag.UserEmail = userEmail;
 
             var products = _context.Products.ToList();
             return View(products);
         }
+        public IActionResult Orders()
+        {
+            var orders = _context.Orders.ToList();
 
+            return View(orders);
+        }
 
-        // Akcja do wyświetlania formularza dodawania produktu
         public IActionResult Create()
         {
-            var userRole = HttpContext.Session.GetString("UserRole"); // Pobierz rolę z sesji
+            var userRole = HttpContext.Session.GetString("UserRole");
             if (userRole != "Admin")
             {
-                return Unauthorized(); // Jeśli użytkownik nie jest adminem, zwróć błąd 401
+                return Unauthorized();
             }
             return View();
         }
 
-
-        // Akcja, która dodaje produkt do koszyka
         [HttpPost]
-            public IActionResult AddToCart(int productId)
+        public IActionResult Create(Product product)
+        {
+            var userRole = HttpContext.Session.GetString("UserRole");
+            if (userRole != "Admin")
             {
-                var product = _context.Products.FirstOrDefault(p => p.Id == productId);
-                if (product == null)
-                {
-                    return NotFound();
-                }
+                return Unauthorized();
+            }
 
-                // Pobierz koszyk z sesji lub utwórz nowy
-                var cart = GetCart();
-
-                // Sprawdź, czy produkt już istnieje w koszyku
-                var cartItem = cart.FirstOrDefault(c => c.ProductId == productId);
-                if (cartItem == null)
-                {
-                    // Dodaj nowy produkt do koszyka
-                    cart.Add(new CartItem
-                    {
-                        ProductId = product.Id,
-                        ProductName = product.Name,
-                        Quantity = 1,
-                        Price = product.Price
-                    });
-                }
-                else
-                {
-                    // Zwiększ ilość, jeśli produkt już istnieje
-                    cartItem.Quantity++;
-                }
-
-                // Zapisz koszyk w sesji
-                SaveCart(cart);
-
+            if (ModelState.IsValid)
+            {
+                _context.Products.Add(product);
+                _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            // Akcja wyświetlająca zawartość koszyka
-            public IActionResult Cart()
-            {
-                var cart = GetCart();
-                return View(cart);
-            }
-
-            // Pomocnicze metody
-            private List<CartItem> GetCart()
-            {
-                var cartJson = HttpContext.Session.GetString("Cart");
-                return string.IsNullOrEmpty(cartJson) ? new List<CartItem>() : JsonConvert.DeserializeObject<List<CartItem>>(cartJson);
-            }
-
-            private void SaveCart(List<CartItem> cart)
-            {
-                var cartJson = JsonConvert.SerializeObject(cart);
-                HttpContext.Session.SetString("Cart", cartJson);
-            }
+            return View(product);
+        }
+            
         }
     }
 

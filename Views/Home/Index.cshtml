@@ -2,17 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h2>Welcome to the Home Page</h2>
+<h2>Witaj w naszym sklepie internetowym</h2>
 
-<!-- Wyświetlanie informacji o użytkowniku, jeśli jest zalogowany -->
 @if (ViewBag.Username != null)
 {
     <p>You are logged in as: <strong>@ViewBag.Username</strong></p>
     <form method="post" action="/Account/Logout">
-        <button type="submit">Log out</button>
+        <button type="submit">Wyloguj się</button>
     </form>
 
-    <!-- Przycisk do wyświetlenia produktów, widoczny tylko dla zalogowanego użytkownika -->
     <a href="@Url.Action("Index", "Product")">Zobacz produkty</a>
 }
 else
@@ -25,7 +23,6 @@ else
     <br />
 }
 
-<!-- Komunikaty zwrotne (np. po logowaniu) -->
 @if (TempData["SuccessMessage"] != null)
 {
     <div style="color: green;">
@@ -33,7 +30,6 @@ else
     </div>
 }
 
-<!-- Przykład błędów przy logowaniu -->
 @if (!ViewData.ModelState.IsValid)
 {
     <div style="color: red;">

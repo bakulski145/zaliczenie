@@ -16,36 +16,29 @@ namespace zaliczenie.Controllers
             _context = context;
         }
 
-
-
-        // Formularz rejestracji (GET)
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        // Formularz logowania (GET)
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        // Rejestracja użytkownika (POST)
         [HttpPost]
         public IActionResult Register(User user)
         {
             if (ModelState.IsValid)
             {
-                // Sprawdzamy, czy e-mail już istnieje w bazie danych
                 if (_context.Users.Any(u => u.Email == user.Email))
                 {
                     ModelState.AddModelError("Email", "This email is already registered.");
                     return View(user);
                 }
 
-                // Sprawdzamy, czy nazwa użytkownika już istnieje w bazie danych
                 if (_context.Users.Any(u => u.Username == user.Username))
                 {
                     ModelState.AddModelError("Username", "This username is already taken.");
@@ -61,7 +54,6 @@ namespace zaliczenie.Controllers
             return View(user);
         }
 
-        // Logowanie użytkownika (POST)
         [HttpPost]
         public IActionResult Login(LoginViewModel model)
         {
@@ -72,11 +64,10 @@ namespace zaliczenie.Controllers
 
                 if (user != null)
                 {
-                    // Zapisz dane do sesji
-                    HttpContext.Session.SetString("UserEmail", user.Email);
-                    HttpContext.Session.SetString("UserRole", user.Role);  // Dodajemy również rolę
 
-                    // Przekierowanie po zalogowaniu
+                    HttpContext.Session.SetString("UserEmail", user.Email);
+                    HttpContext.Session.SetString("UserRole", user.Role); 
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -92,17 +83,14 @@ namespace zaliczenie.Controllers
 
         public IActionResult UserProfile()
         {
-            // Sprawdź, czy użytkownik jest zalogowany
             if (HttpContext.Session.GetString("UserRole") == null)
             {
                 return RedirectToAction("Login");
             }
 
-            // Pobierz dane użytkownika z sesji (lub bazy danych)
             var email = HttpContext.Session.GetString("UserEmail");
             var role = HttpContext.Session.GetString("UserRole");
 
-            // Utwórz model dla widoku
             var model = new UserProfileViewModel
             {
                 Email = email,
@@ -114,19 +102,13 @@ namespace zaliczenie.Controllers
 
 
 
-
-
-        // Wylogowanie użytkownika
         public IActionResult Logout()
 {
-    // Usunięcie danych użytkownika z sesji
     HttpContext.Session.Remove("UserEmail");
     HttpContext.Session.Remove("UserRole");
 
-    // Ustawienie komunikatu o wylogowaniu
     TempData["SuccessMessage"] = "Logged out successfully!";
     
-    // Przekierowanie na stronę główną
     return RedirectToAction("Index", "Home");
 }
     }
