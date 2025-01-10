@@ -35,13 +35,13 @@ namespace zaliczenie.Controllers
             {
                 if (_context.Users.Any(u => u.Email == user.Email))
                 {
-                    ModelState.AddModelError("Email", "This email is already registered.");
+                    ModelState.AddModelError("Email", "Istnieje już użytkownik o tym emailu.");
                     return View(user);
                 }
 
                 if (_context.Users.Any(u => u.Username == user.Username))
                 {
-                    ModelState.AddModelError("Username", "This username is already taken.");
+                    ModelState.AddModelError("Username", "Istnieje już użytkownik o tej nazwie.");
                     return View(user);
                 }
 
@@ -107,7 +107,7 @@ namespace zaliczenie.Controllers
     HttpContext.Session.Remove("UserEmail");
     HttpContext.Session.Remove("UserRole");
 
-    TempData["SuccessMessage"] = "Logged out successfully!";
+    TempData["SuccessMessage"] = "Wylogowano!";
     
     return RedirectToAction("Index", "Home");
 }

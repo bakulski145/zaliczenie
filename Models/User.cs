@@ -20,6 +20,6 @@ namespace zaliczenie.Models
         [StringLength(100, MinimumLength = 6, ErrorMessage = "Password must be at least 6 characters long.")]
         public string Password { get; set; }
 
-        public string Role { get; set; } = "User"; // Domyślnie zwykły użytkownik
+        public string Role { get; set; } = "User";
     }
 }

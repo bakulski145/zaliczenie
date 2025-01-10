@@ -13,7 +13,6 @@
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Order\CreateOrder.cshtml" />
-    <None Include="Views\Product\Cart.cshtml" />
     <None Include="Views\Product\Create.cshtml" />
     <None Include="Views\Product\Index.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />

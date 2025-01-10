@@ -33,6 +33,8 @@ var app = builder.Build();
 
 app.UseSession();
 app.UseRouting();
+app.UseStaticFiles();
+
 
 app.MapControllerRoute(
     name: "default",

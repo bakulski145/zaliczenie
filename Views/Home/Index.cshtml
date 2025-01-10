@@ -6,7 +6,7 @@
 
 @if (ViewBag.Username != null)
 {
-    <p>You are logged in as: <strong>@ViewBag.Username</strong></p>
+    <p>Jesteś zalogowany jako: <strong>@ViewBag.Username</strong></p>
     <form method="post" action="/Account/Logout">
         <button type="submit">Wyloguj się</button>
     </form>
@@ -15,11 +15,11 @@
 }
 else
 {
-    <p>You are not logged in.</p>
+    <p>Nie jesteś zalogowany</p>
     <br />
-    <a href="/Account/Login">Login</a>
+    <a href="/Account/Login">Zaloguj się</a>
     <br />
-    <a href="/Account/Register">Register</a>
+    <a href="/Account/Register">Zarejestruj się</a>
     <br />
 }
 

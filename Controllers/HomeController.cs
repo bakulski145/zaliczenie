@@ -14,6 +14,7 @@ namespace zaliczenie.Controllers
                 ViewBag.Username = email;
             }
 
+
             return View();
         }
 
